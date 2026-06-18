@@ -107,8 +107,10 @@ export default function ContactSection() {
         {
           from_name: formData.name,
           from_email: formData.email,
-          message: formData.message,
+          reply_to: formData.email,
           to_name: 'Gaurav',
+          to_email: SITE.email,
+          message: formData.message,
         },
         EMAILJS_CONFIG.publicKey
       );
@@ -116,7 +118,8 @@ export default function ContactSection() {
       setStatus('success');
       setFormData({ name: '', email: '', message: '' });
       setTimeout(() => setStatus('idle'), 4000);
-    } catch {
+    } catch (err) {
+      console.error('EmailJS error:', err);
       setStatus('error');
       setTimeout(() => setStatus('idle'), 4000);
     }
