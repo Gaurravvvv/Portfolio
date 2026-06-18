@@ -118,8 +118,9 @@ export default function ContactSection() {
       setStatus('success');
       setFormData({ name: '', email: '', message: '' });
       setTimeout(() => setStatus('idle'), 4000);
-    } catch (err) {
-      console.error('EmailJS error:', err);
+    } catch (err: unknown) {
+      const errorMsg = err instanceof Object && 'text' in err ? (err as { text: string }).text : String(err);
+      console.error('EmailJS error:', errorMsg);
       setStatus('error');
       setTimeout(() => setStatus('idle'), 4000);
     }
