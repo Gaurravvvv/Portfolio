@@ -9,7 +9,7 @@
  * 5. Paste all three values below
  */
 export const EMAILJS_CONFIG = {
-  serviceId: 'service_f6syyjk',    // e.g. 'service_abc123'
-  templateId: 'template_mzq39yb',  // e.g. 'template_xyz789'
-  publicKey: 'sIsVcFBVSh6bsAhut',    // e.g. 'aBcDeFgHiJkLmN'
-} as const;
+  serviceId: 'service_f6syyjk',
+  templateId: 'template_mzq39yb',
+  publicKey: 'sIsVcFBVSh6bsAhut',
+};
