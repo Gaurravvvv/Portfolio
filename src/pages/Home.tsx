@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Download, Mail, ChevronDown } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '../components/icons';
 import AnimatedTyping from '../components/AnimatedTyping';
-import { SITE, ROLES } from '../constants/data';
+import { SITE } from '../constants/data';
 import { staggerContainer, fadeInUp, fadeIn } from '../constants/animations';
 
 function BootSequence({ onComplete }: { onComplete: () => void }) {
@@ -136,12 +136,12 @@ export default function HomeSection() {
               Gaurav Vibhandik
             </motion.h1>
 
-            {/* Role cycling tagline */}
+            {/* Role tagline */}
             <motion.h2
               variants={fadeInUp}
               className="mt-3 sm:mt-4 text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-gray-600 dark:text-gray-300 min-h-[1.5em] font-mono"
             >
-              <AnimatedTyping words={ROLES} />
+              <AnimatedTyping words={['Software Engineer']} />
             </motion.h2>
 
             {/* Short intro */}
