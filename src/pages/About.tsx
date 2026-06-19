@@ -8,25 +8,25 @@ const RIGHT_NOW = [
     icon: Rocket,
     label: 'Building',
     value: 'Real-time collaborative applications with sub-16ms rendering engines',
-    color: 'text-blue-500 bg-blue-50 dark:bg-blue-500/10',
+    color: 'text-accent bg-accent/5 border border-accent/10',
   },
   {
     icon: BookOpen,
     label: 'Learning',
     value: 'Kubernetes orchestration, CI/CD pipeline optimization, and system design',
-    color: 'text-emerald-500 bg-emerald-50 dark:bg-emerald-500/10',
+    color: 'text-accent bg-accent/5 border border-accent/10',
   },
   {
     icon: Compass,
     label: 'Exploring',
     value: 'AI/ML integration in production systems — LangChain, Gemini, Groq inference',
-    color: 'text-purple-500 bg-purple-50 dark:bg-purple-500/10',
+    color: 'text-accent bg-accent/5 border border-accent/10',
   },
   {
     icon: Users,
     label: 'Leading',
     value: 'Open Source initiatives at GDG on Campus — mentoring 40+ developers',
-    color: 'text-amber-500 bg-amber-50 dark:bg-amber-500/10',
+    color: 'text-accent bg-accent/5 border border-accent/10',
   },
 ];
 
@@ -81,11 +81,11 @@ export default function AboutSection() {
                   ['Focus', 'Full-Stack · DevOps · AI/ML'],
                   ['Status', 'Open to SDE / DevOps roles'],
                 ].map(([label, value]) => (
-                  <div key={label} className="flex justify-between items-start gap-3 sm:gap-4">
-                    <dt className="text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-500 whitespace-nowrap">
+                  <div key={label} className="flex flex-col min-[380px]:flex-row min-[380px]:justify-between items-start min-[380px]:items-center gap-1 min-[380px]:gap-4 border-b border-border/40 pb-2 last:border-0 last:pb-0">
+                    <dt className="text-xs sm:text-sm font-semibold text-accent whitespace-nowrap">
                       {label}
                     </dt>
-                    <dd className="text-xs sm:text-sm text-gray-900 dark:text-white text-right font-medium">
+                    <dd className="text-xs sm:text-sm text-gray-900 dark:text-white text-left min-[380px]:text-right font-medium">
                       {value}
                     </dd>
                   </div>

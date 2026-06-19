@@ -21,6 +21,7 @@ export default function SectionHeading({ title, subtitle, children }: SectionHea
         variants={fadeInUp}
         className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white tracking-tight"
       >
+        <span className="text-accent font-normal mr-2 sm:mr-3 select-none opacity-80">$</span>
         {title}
       </motion.h1>
       {subtitle && (

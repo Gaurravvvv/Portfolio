@@ -64,7 +64,7 @@ export default function Navbar({ theme, onToggleTheme, activeSection }: NavbarPr
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-sm border-b border-gray-200/50 dark:border-slate-800/50'
+          ? 'bg-[#f5f5f4]/80 dark:bg-[#0a0a0c]/80 backdrop-blur-xl border-b border-border shadow-sm'
           : 'bg-transparent'
       }`}
     >
@@ -73,23 +73,24 @@ export default function Navbar({ theme, onToggleTheme, activeSection }: NavbarPr
           {/* Logo */}
           <button
             onClick={() => scrollToSection('home')}
-            className="text-lg font-bold text-gray-900 dark:text-white hover:text-accent transition-colors cursor-pointer"
+            className="text-sm sm:text-base font-bold text-gray-900 dark:text-white hover:text-accent transition-colors cursor-pointer font-mono"
           >
-            <span className="text-accent">G</span>aurav
-            <span className="text-accent">.</span>
+            <span className="text-accent mr-1 select-none opacity-80">$</span>
+            <span className="hidden min-[400px]:inline">gaurav_vibhandik</span>
+            <span className="min-[400px]:hidden">gaurav</span>
           </button>
 
           {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden md:flex items-center gap-1 font-mono">
             {NAV_LINKS.map((link) => {
               const isActive = activeSection === link.sectionId;
               return (
                 <button
                   key={link.sectionId}
                   onClick={() => scrollToSection(link.sectionId)}
-                  className={`relative px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 cursor-pointer ${
+                  className={`relative px-3 py-2 text-xs font-semibold rounded-md transition-colors duration-200 cursor-pointer ${
                     isActive
-                      ? 'text-accent'
+                      ? 'text-accent font-bold'
                       : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
                   }`}
                 >
@@ -97,7 +98,7 @@ export default function Navbar({ theme, onToggleTheme, activeSection }: NavbarPr
                   {isActive && (
                     <motion.div
                       layoutId="navbar-indicator"
-                      className="absolute bottom-0 left-3 right-3 h-0.5 bg-accent rounded-full"
+                      className="absolute bottom-0 left-3 right-3 h-0.5 bg-accent"
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -114,21 +115,21 @@ export default function Navbar({ theme, onToggleTheme, activeSection }: NavbarPr
               href={SITE.resumePath}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden md:inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold
-                         bg-accent text-white rounded-lg hover:bg-accent-hover
+              className="hidden md:inline-flex items-center gap-2 px-3.5 py-1.5 text-xs font-bold font-mono
+                         bg-accent text-[#0a0a0c] dark:text-[#0a0a0c] rounded-md hover:bg-accent-hover
                          transition-all duration-200 hover:-translate-y-0.5
-                         hover:shadow-lg hover:shadow-accent/25"
+                         hover:shadow-lg hover:shadow-accent/15"
               aria-label="Download Resume"
             >
-              <FileText className="w-4 h-4" />
+              <FileText className="w-3.5 h-3.5" />
               Resume
             </a>
 
             {/* Mobile hamburger */}
             <button
               onClick={() => setIsMobileOpen(!isMobileOpen)}
-              className="md:hidden flex items-center justify-center w-10 h-10 rounded-xl
-                         bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 cursor-pointer"
+              className="md:hidden flex items-center justify-center w-10 h-10 rounded-md
+                         bg-white/[0.02] dark:bg-[#0a0a0c]/40 border border-border cursor-pointer text-accent"
               aria-label="Toggle navigation menu"
             >
               <AnimatePresence mode="wait" initial={false}>
@@ -140,7 +141,7 @@ export default function Navbar({ theme, onToggleTheme, activeSection }: NavbarPr
                     exit={{ rotate: 90, opacity: 0 }}
                     transition={{ duration: 0.15 }}
                   >
-                    <X className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+                    <X className="w-5 h-5 text-accent" />
                   </motion.div>
                 ) : (
                   <motion.div
@@ -150,7 +151,7 @@ export default function Navbar({ theme, onToggleTheme, activeSection }: NavbarPr
                     exit={{ rotate: -90, opacity: 0 }}
                     transition={{ duration: 0.15 }}
                   >
-                    <Menu className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+                    <Menu className="w-5 h-5 text-accent" />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -167,20 +168,20 @@ export default function Navbar({ theme, onToggleTheme, activeSection }: NavbarPr
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: 'easeInOut' }}
-            className="md:hidden overflow-hidden bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl
-                       border-b border-gray-200 dark:border-slate-800"
+            className="md:hidden overflow-hidden bg-[#f5f5f4]/95 dark:bg-[#0a0a0c]/95 backdrop-blur-xl
+                       border-b border-border"
           >
-            <div className="section-container py-4 flex flex-col gap-1">
+            <div className="section-container py-4 flex flex-col gap-1 font-mono">
               {NAV_LINKS.map((link) => {
                 const isActive = activeSection === link.sectionId;
                 return (
                   <button
                     key={link.sectionId}
                     onClick={() => scrollToSection(link.sectionId)}
-                    className={`px-4 py-3 rounded-xl text-sm font-medium transition-colors text-left cursor-pointer ${
+                    className={`px-4 py-3 rounded-md text-xs font-semibold transition-colors text-left cursor-pointer ${
                       isActive
                         ? 'bg-accent/10 text-accent'
-                        : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800'
+                        : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-zinc-900/60'
                     }`}
                   >
                     {link.label}
@@ -192,7 +193,7 @@ export default function Navbar({ theme, onToggleTheme, activeSection }: NavbarPr
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-2 flex items-center justify-center gap-2 px-4 py-3
-                           bg-accent text-white rounded-xl text-sm font-semibold"
+                           bg-accent text-[#0a0a0c] dark:text-[#0a0a0c] rounded-md text-xs font-bold"
               >
                 <FileText className="w-4 h-4" />
                 Resume

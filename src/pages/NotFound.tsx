@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Home, ArrowLeft } from 'lucide-react';
+import { Terminal, ArrowLeft } from 'lucide-react';
 import { pageTransition, staggerContainer, fadeInUp } from '../constants/animations';
 
 export default function NotFound() {
@@ -10,47 +10,51 @@ export default function NotFound() {
       initial="initial"
       animate="animate"
       exit="exit"
-      className="min-h-screen flex items-center justify-center"
+      className="min-h-screen flex items-center justify-center font-mono p-4"
     >
       <motion.div
         variants={staggerContainer}
         initial="hidden"
         animate="visible"
-        className="section-container text-center"
+        className="w-full max-w-md card-base space-y-5"
       >
-        <motion.h1
-          variants={fadeInUp}
-          className="text-8xl md:text-9xl font-extrabold text-gray-200 dark:text-slate-800"
-        >
-          404
-        </motion.h1>
-        <motion.h2
-          variants={fadeInUp}
-          className="mt-4 text-2xl md:text-3xl font-bold text-gray-900 dark:text-white"
-        >
-          Page not found
-        </motion.h2>
-        <motion.p
-          variants={fadeInUp}
-          className="mt-3 text-gray-500 dark:text-gray-400 max-w-md mx-auto"
-        >
-          The page you're looking for doesn't exist or has been moved. Let's get
-          you back on track.
-        </motion.p>
+        {/* Terminal Header */}
+        <div className="flex items-center gap-1.5 border-b border-border pb-3 mb-1 text-xs text-gray-500">
+          <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+          <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+          <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
+          <span className="ml-2 text-[10px] tracking-tight">bash --error-handler</span>
+        </div>
+
+        {/* Error Simulation */}
+        <div className="space-y-2.5 text-left text-xs sm:text-sm">
+          <motion.div variants={fadeInUp} className="flex gap-2">
+            <span className="text-accent">$</span>
+            <span>cd /requested-route</span>
+          </motion.div>
+          <motion.div variants={fadeInUp} className="text-red-500/90 font-semibold leading-relaxed">
+            bash: cd: /requested-route: No such file or directory
+          </motion.div>
+          <motion.div variants={fadeInUp} className="text-yellow-600 dark:text-yellow-500 text-xs pt-2">
+            [WARNING] Route resolution failed. Shell exit code: 404 (Not Found)
+          </motion.div>
+        </div>
+
+        {/* Action Buttons */}
         <motion.div
           variants={fadeInUp}
-          className="mt-8 flex items-center justify-center gap-3"
+          className="mt-6 pt-4 border-t border-border flex items-center gap-2.5"
         >
-          <Link to="/" className="btn-primary">
-            <Home className="w-4 h-4" />
-            Back to Home
+          <Link to="/" className="btn-primary text-xs py-2 px-3 sm:px-4">
+            <Terminal className="w-3.5 h-3.5" />
+            ./go_home
           </Link>
           <button
             onClick={() => window.history.back()}
-            className="btn-secondary cursor-pointer"
+            className="btn-secondary text-xs py-2 px-3 sm:px-4 cursor-pointer"
           >
-            <ArrowLeft className="w-4 h-4" />
-            Go Back
+            <ArrowLeft className="w-3.5 h-3.5" />
+            cd ..
           </button>
         </motion.div>
       </motion.div>

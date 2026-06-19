@@ -15,12 +15,12 @@ const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
 };
 
 const ICON_COLORS: Record<string, string> = {
-  Code2: 'text-blue-500 bg-blue-50 dark:bg-blue-500/10',
-  Layout: 'text-emerald-500 bg-emerald-50 dark:bg-emerald-500/10',
-  Server: 'text-purple-500 bg-purple-50 dark:bg-purple-500/10',
-  Cloud: 'text-cyan-500 bg-cyan-50 dark:bg-cyan-500/10',
-  Database: 'text-amber-500 bg-amber-50 dark:bg-amber-500/10',
-  Wrench: 'text-rose-500 bg-rose-50 dark:bg-rose-500/10',
+  Code2: 'text-accent bg-accent/5 border border-accent/10',
+  Layout: 'text-accent bg-accent/5 border border-accent/10',
+  Server: 'text-accent bg-accent/5 border border-accent/10',
+  Cloud: 'text-accent bg-accent/5 border border-accent/10',
+  Database: 'text-accent bg-accent/5 border border-accent/10',
+  Wrench: 'text-accent bg-accent/5 border border-accent/10',
 };
 
 export default function SkillsSection() {

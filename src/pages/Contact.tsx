@@ -127,7 +127,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-16 sm:py-20 md:py-24">
+    <section id="contact" className="py-16 sm:py-20 md:py-24 font-mono">
       <div className="section-container">
         <SectionHeading
           title="Get In Touch"
@@ -143,10 +143,17 @@ export default function ContactSection() {
             viewport={{ once: true, margin: '-60px' }}
           >
             <form ref={formRef} onSubmit={handleSubmit} className="card-base space-y-4 sm:space-y-5">
+              <div className="flex items-center gap-1.5 border-b border-border pb-3 mb-2 text-xs text-gray-500">
+                <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+                <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+                <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
+                <span className="ml-2 font-mono text-[10px] tracking-tight text-gray-400">send_message.sh</span>
+              </div>
+
               <div>
                 <label
                   htmlFor="contact-name"
-                  className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 sm:mb-1.5"
+                  className="block text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 sm:mb-1.5"
                 >
                   Name
                 </label>
@@ -158,11 +165,11 @@ export default function ContactSection() {
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, name: e.target.value }))
                   }
-                  className="w-full px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700
-                             text-gray-900 dark:text-white text-sm
-                             focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent
-                             placeholder:text-gray-400 dark:placeholder:text-gray-600"
-                  placeholder="Your name"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-2.5 rounded-md bg-white/[0.02] dark:bg-[#0a0a0c]/40 border border-border
+                             text-gray-900 dark:text-white text-sm font-mono
+                             focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent
+                             placeholder:text-gray-400 dark:placeholder:text-gray-700"
+                  placeholder="gaurav_vibhandik"
                   disabled={status === 'sending'}
                 />
               </div>
@@ -170,7 +177,7 @@ export default function ContactSection() {
               <div>
                 <label
                   htmlFor="contact-email"
-                  className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 sm:mb-1.5"
+                  className="block text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 sm:mb-1.5"
                 >
                   Email
                 </label>
@@ -182,11 +189,11 @@ export default function ContactSection() {
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, email: e.target.value }))
                   }
-                  className="w-full px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700
-                             text-gray-900 dark:text-white text-sm
-                             focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent
-                             placeholder:text-gray-400 dark:placeholder:text-gray-600"
-                  placeholder="your.email@example.com"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-2.5 rounded-md bg-white/[0.02] dark:bg-[#0a0a0c]/40 border border-border
+                             text-gray-900 dark:text-white text-sm font-mono
+                             focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent
+                             placeholder:text-gray-400 dark:placeholder:text-gray-700"
+                  placeholder="visitor@mail.com"
                   disabled={status === 'sending'}
                 />
               </div>
@@ -194,7 +201,7 @@ export default function ContactSection() {
               <div>
                 <label
                   htmlFor="contact-message"
-                  className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 sm:mb-1.5"
+                  className="block text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 sm:mb-1.5"
                 >
                   Message
                 </label>
@@ -206,11 +213,11 @@ export default function ContactSection() {
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, message: e.target.value }))
                   }
-                  className="w-full px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700
-                             text-gray-900 dark:text-white text-sm resize-none
-                             focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent
-                             placeholder:text-gray-400 dark:placeholder:text-gray-600"
-                  placeholder="Tell me about your project or role..."
+                  className="w-full px-3 sm:px-4 py-2 sm:py-2.5 rounded-md bg-white/[0.02] dark:bg-[#0a0a0c]/40 border border-border
+                             text-gray-900 dark:text-white text-sm resize-none font-mono
+                             focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent
+                             placeholder:text-gray-400 dark:placeholder:text-gray-700"
+                  placeholder="System: Write your proposal here..."
                   disabled={status === 'sending'}
                 />
               </div>
@@ -225,17 +232,17 @@ export default function ContactSection() {
                 {status === 'sending' ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    Sending...
+                    STATUS: SENDING...
                   </>
                 ) : status === 'success' ? (
                   <>
                     <Check className="w-4 h-4" />
-                    Message Sent!
+                    STATUS: DELIVERED
                   </>
                 ) : (
                   <>
                     <Send className="w-4 h-4" />
-                    Send Message
+                    ./submit_form
                   </>
                 )}
               </button>
@@ -245,18 +252,18 @@ export default function ContactSection() {
                 <motion.p
                   initial={{ opacity: 0, y: 4 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-sm text-emerald-600 dark:text-emerald-400 text-center"
+                  className="text-xs text-emerald-600 dark:text-accent font-semibold text-center mt-2"
                 >
-                  Thanks! Your message has been sent to my inbox.
+                  [SUCCESS] Message successfully routed to gaurav-mesh.
                 </motion.p>
               )}
               {status === 'error' && (
                 <motion.p
                   initial={{ opacity: 0, y: 4 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-sm text-red-600 dark:text-red-400 text-center"
+                  className="text-xs text-red-600 dark:text-red-400 font-semibold text-center mt-2"
                 >
-                  Something went wrong. Please email me directly at {SITE.email}.
+                  [ERROR] Failed to send. Please email me directly at {SITE.email}.
                 </motion.p>
               )}
             </form>
@@ -280,12 +287,12 @@ export default function ContactSection() {
                   variants={fadeInRight}
                   className="card-base flex items-center gap-3 sm:gap-4 group"
                 >
-                  <div className="p-2 sm:p-2.5 rounded-xl bg-accent/10 text-accent shrink-0">
+                  <div className="p-2 sm:p-2.5 rounded-lg bg-accent/5 text-accent border border-accent/15 shrink-0">
                     <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
 
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider">
+                  <div className="flex-1 min-w-0 font-mono">
+                    <p className="text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
                       {detail.label}
                     </p>
                     {detail.href !== '#' ? (
@@ -293,12 +300,12 @@ export default function ContactSection() {
                         href={detail.href}
                         target={detail.href.startsWith('http') ? '_blank' : undefined}
                         rel={detail.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                        className="text-xs sm:text-sm font-medium text-gray-900 dark:text-white hover:text-accent transition-colors truncate block"
+                        className="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white hover:text-accent transition-colors truncate block"
                       >
                         {detail.value}
                       </a>
                     ) : (
-                      <p className="text-xs sm:text-sm font-medium text-gray-900 dark:text-white truncate">
+                      <p className="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white truncate">
                         {detail.value}
                       </p>
                     )}
@@ -328,12 +335,12 @@ export default function ContactSection() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
-                className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 bg-gray-900 dark:bg-white text-white dark:text-gray-900
-                           px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-medium shadow-lg z-50
+                className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 bg-[#0d0d10] border border-accent/20 text-accent
+                           px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-medium shadow-lg z-50
                            flex items-center gap-2"
               >
-                <Check className="w-4 h-4 text-emerald-400 dark:text-emerald-600" />
-                {copiedField} copied to clipboard
+                <Check className="w-4 h-4 text-accent" />
+                [SYSTEM] {copiedField} copied to clipboard
               </motion.div>
             )}
           </motion.div>

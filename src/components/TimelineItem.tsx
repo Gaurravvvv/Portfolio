@@ -4,10 +4,10 @@ import { fadeInLeft } from '../constants/animations';
 import type { ExperienceItem } from '../constants/data';
 
 const TYPE_CONFIG = {
-  work: { icon: Briefcase, color: 'bg-blue-500', label: 'Work' },
-  community: { icon: Users, color: 'bg-emerald-500', label: 'Community' },
-  education: { icon: GraduationCap, color: 'bg-purple-500', label: 'Education' },
-  achievement: { icon: Trophy, color: 'bg-amber-500', label: 'Achievement' },
+  work: { icon: Briefcase, color: 'bg-accent border-accent', label: 'Work' },
+  community: { icon: Users, color: 'bg-accent border-accent', label: 'Community' },
+  education: { icon: GraduationCap, color: 'bg-accent border-accent', label: 'Education' },
+  achievement: { icon: Trophy, color: 'bg-accent border-accent', label: 'Achievement' },
 } as const;
 
 interface TimelineItemProps {
@@ -23,17 +23,16 @@ export default function TimelineItem({ item, index }: TimelineItemProps) {
     <motion.div
       variants={fadeInLeft}
       custom={index}
-      className="relative flex gap-3 sm:gap-6 group"
+      className="relative flex gap-4 sm:gap-6 group z-10"
     >
-      {/* Timeline line + dot */}
-      <div className="flex flex-col items-center">
+      {/* Dot container — sits perfectly above background continuous line */}
+      <div className="flex flex-col items-center shrink-0">
         <div
-          className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full ${config.color} flex items-center justify-center
-                      shadow-lg ring-4 ring-white dark:ring-slate-900 shrink-0 z-10`}
+          className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg border-2 ${config.color} flex items-center justify-center
+                      shadow-lg bg-[#0d0d10] text-accent ring-4 ring-[#0a0a0c] dark:ring-[#0a0a0c] shrink-0 z-20`}
         >
-          <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+          <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent dark:text-accent" />
         </div>
-        <div className="w-0.5 flex-1 bg-gray-200 dark:bg-slate-700 -mt-1" />
       </div>
 
       {/* Content card */}
@@ -44,13 +43,13 @@ export default function TimelineItem({ item, index }: TimelineItemProps) {
               {item.title}
             </h3>
             {item.organization && (
-              <p className="text-xs sm:text-sm font-medium text-accent truncate">
+              <p className="text-xs sm:text-sm font-semibold text-accent truncate font-mono">
                 {item.organization}
               </p>
             )}
           </div>
           {item.period && (
-            <span className="text-[10px] sm:text-xs font-medium text-gray-400 dark:text-gray-500 whitespace-nowrap bg-gray-100 dark:bg-slate-800 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full self-start sm:self-auto">
+            <span className="text-[10px] sm:text-xs font-semibold text-accent whitespace-nowrap bg-accent-muted px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-md self-start sm:self-auto font-mono">
               {item.period}
             </span>
           )}
@@ -60,9 +59,9 @@ export default function TimelineItem({ item, index }: TimelineItemProps) {
           {item.description.map((desc, i) => (
             <li
               key={i}
-              className="flex gap-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed"
+              className="flex gap-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed font-mono"
             >
-              <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent/50 shrink-0" />
+              <span className="mt-1 text-accent select-none font-bold shrink-0 text-xs">{">"}</span>
               <span>{desc}</span>
             </li>
           ))}
@@ -71,7 +70,7 @@ export default function TimelineItem({ item, index }: TimelineItemProps) {
         {item.link && item.linkLabel && (
           <button
             onClick={() => document.getElementById(item.link!.replace('/', ''))?.scrollIntoView({ behavior: 'smooth' })}
-            className="inline-flex items-center gap-1 mt-2 sm:mt-3 text-xs sm:text-sm font-medium text-accent hover:underline cursor-pointer"
+            className="inline-flex items-center gap-1 mt-2 sm:mt-3 text-xs sm:text-sm font-semibold text-accent hover:underline cursor-pointer font-mono"
           >
             {item.linkLabel}
           </button>

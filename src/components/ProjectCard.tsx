@@ -73,20 +73,20 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         <ul className="space-y-2 sm:space-y-2.5 mb-5 sm:mb-6 flex-1">
           {project.highlights.map((highlight, i) => (
             <li key={i} className="flex gap-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-              <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
+              <span className="mt-1 text-accent select-none font-bold shrink-0 text-xs">{">"}</span>
               <span>{highlight}</span>
             </li>
           ))}
         </ul>
 
         {/* Action buttons — pinned to bottom */}
-        <div className="flex items-center gap-2 sm:gap-3 mt-auto pt-3 sm:pt-4 border-t border-gray-100 dark:border-slate-700/50">
+        <div className="flex flex-col min-[380px]:flex-row items-stretch min-[380px]:items-center gap-2 mt-auto pt-3 sm:pt-4 border-t border-gray-100 dark:border-zinc-800">
           {project.liveUrl && (
             <a
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary text-xs py-2 px-3 sm:px-4"
+              className="btn-primary text-xs py-2 px-3 sm:px-4 flex-1 justify-center"
             >
               <ExternalLink className="w-3.5 h-3.5" />
               Live Demo
@@ -96,7 +96,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             href={project.sourceUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-secondary text-xs py-2 px-3 sm:px-4"
+            className="btn-secondary text-xs py-2 px-3 sm:px-4 flex-1 justify-center"
           >
             <GithubIcon className="w-3.5 h-3.5" />
             Source
