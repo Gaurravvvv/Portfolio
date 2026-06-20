@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useTheme } from './hooks/useTheme';
 import { useActiveSection } from './hooks/useActiveSection';
+import { TerminalProvider } from './hooks/useTerminal';
 import Layout from './components/Layout';
 import HomeSection from './pages/Home';
 import AboutSection from './pages/About';
@@ -40,7 +41,9 @@ function AppContent() {
 export default function App() {
   return (
     <BrowserRouter>
-      <AppContent />
+      <TerminalProvider>
+        <AppContent />
+      </TerminalProvider>
     </BrowserRouter>
   );
 }

@@ -4,6 +4,7 @@ import { ArrowRight, Download, Mail, ChevronDown } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '../components/icons';
 import AnimatedTyping from '../components/AnimatedTyping';
 import { SITE } from '../constants/data';
+import { useTerminal } from '../hooks/useTerminal';
 import { staggerContainer, fadeInUp, fadeIn } from '../constants/animations';
 
 function BootSequence({ onComplete }: { onComplete: () => void }) {
@@ -79,6 +80,7 @@ function BootSequence({ onComplete }: { onComplete: () => void }) {
 }
 
 export default function HomeSection() {
+  const { isTerminalOpen } = useTerminal();
   const [isBooting, setIsBooting] = useState(() => {
     if (typeof window === 'undefined') return false;
     return !sessionStorage.getItem('portfolio-booted');
@@ -130,7 +132,11 @@ export default function HomeSection() {
             {/* Name */}
             <motion.h1
               variants={fadeInUp}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-[1.1]"
+              className={`font-extrabold text-gray-900 dark:text-white tracking-tight leading-[1.1] ${
+                isTerminalOpen
+                  ? 'text-2xl sm:text-3xl md:text-4xl lg:text-5xl'
+                  : 'text-3xl sm:text-4xl md:text-5xl lg:text-7xl'
+              }`}
             >
               <span className="text-accent select-none mr-2 sm:mr-4 font-normal font-mono opacity-80">$</span>
               Gaurav Vibhandik
@@ -139,7 +145,11 @@ export default function HomeSection() {
             {/* Role tagline */}
             <motion.h2
               variants={fadeInUp}
-              className="mt-3 sm:mt-4 text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-gray-600 dark:text-gray-300 min-h-[1.5em] font-mono"
+              className={`mt-3 sm:mt-4 font-semibold text-gray-600 dark:text-gray-300 min-h-[1.5em] font-mono ${
+                isTerminalOpen
+                  ? 'text-base sm:text-lg md:text-xl'
+                  : 'text-lg sm:text-xl md:text-2xl lg:text-3xl'
+              }`}
             >
               <AnimatedTyping words={['Software Engineer']} />
             </motion.h2>

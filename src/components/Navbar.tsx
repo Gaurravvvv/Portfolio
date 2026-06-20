@@ -4,6 +4,7 @@ import { Menu, X, FileText } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import { SITE } from '../constants/data';
 import type { SectionId } from '../hooks/useActiveSection';
+import { useTerminal } from '../hooks/useTerminal';
 
 interface NavLink {
   label: string;
@@ -26,6 +27,7 @@ interface NavbarProps {
 }
 
 export default function Navbar({ theme, onToggleTheme, activeSection }: NavbarProps) {
+  const { isTerminalOpen } = useTerminal();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
@@ -62,7 +64,9 @@ export default function Navbar({ theme, onToggleTheme, activeSection }: NavbarPr
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 right-0 z-50 transition-all duration-300 ${
+        isTerminalOpen ? 'md:left-1/2 left-0' : 'left-0'
+      } ${
         isScrolled
           ? 'bg-[#f5f5f4]/80 dark:bg-[#0a0a0c]/80 backdrop-blur-xl border-b border-border shadow-sm'
           : 'bg-transparent'
@@ -81,7 +85,7 @@ export default function Navbar({ theme, onToggleTheme, activeSection }: NavbarPr
           </button>
 
           {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-1 font-mono">
+          <div className={`hidden ${isTerminalOpen ? '2xl:flex' : 'lg:flex'} items-center gap-1 font-mono`}>
             {NAV_LINKS.map((link) => {
               const isActive = activeSection === link.sectionId;
               return (
@@ -115,21 +119,27 @@ export default function Navbar({ theme, onToggleTheme, activeSection }: NavbarPr
               href={SITE.resumePath}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden md:inline-flex items-center gap-2 px-3.5 py-1.5 text-xs font-bold font-mono
-                         bg-accent text-[#0a0a0c] dark:text-[#0a0a0c] rounded-md hover:bg-accent-hover
-                         transition-all duration-200 hover:-translate-y-0.5
-                         hover:shadow-lg hover:shadow-accent/15"
+              className={`hidden md:inline-flex items-center justify-center bg-accent text-[#0a0a0c] dark:text-[#0a0a0c] hover:bg-accent-hover transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/15 ${
+                isTerminalOpen
+                  ? 'w-10 h-10 rounded-xl'
+                  : 'gap-2 px-3.5 py-1.5 text-xs font-bold font-mono rounded-md'
+              }`}
               aria-label="Download Resume"
             >
-              <FileText className="w-3.5 h-3.5" />
-              Resume
+              {isTerminalOpen ? (
+                <FileText className="w-[18px] h-[18px]" />
+              ) : (
+                <>
+                  <FileText className="w-3.5 h-3.5" />
+                  Resume
+                </>
+              )}
             </a>
 
             {/* Mobile hamburger */}
             <button
               onClick={() => setIsMobileOpen(!isMobileOpen)}
-              className="md:hidden flex items-center justify-center w-10 h-10 rounded-md
-                         bg-white/[0.02] dark:bg-[#0a0a0c]/40 border border-border cursor-pointer text-accent"
+              className={`${isTerminalOpen ? '2xl:hidden' : 'lg:hidden'} flex items-center justify-center w-10 h-10 rounded-md bg-white/[0.02] dark:bg-[#0a0a0c]/40 border border-border cursor-pointer text-accent`}
               aria-label="Toggle navigation menu"
             >
               <AnimatePresence mode="wait" initial={false}>
@@ -168,8 +178,8 @@ export default function Navbar({ theme, onToggleTheme, activeSection }: NavbarPr
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: 'easeInOut' }}
-            className="md:hidden overflow-hidden bg-[#f5f5f4]/95 dark:bg-[#0a0a0c]/95 backdrop-blur-xl
-                       border-b border-border"
+            className={`${isTerminalOpen ? '2xl:hidden' : 'lg:hidden'} overflow-hidden bg-[#f5f5f4]/95 dark:bg-[#0a0a0c]/95 backdrop-blur-xl
+                       border-b border-border`}
           >
             <div className="section-container py-4 flex flex-col gap-1 font-mono">
               {NAV_LINKS.map((link) => {

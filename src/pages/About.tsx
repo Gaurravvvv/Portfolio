@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Rocket, BookOpen, Compass, Users } from 'lucide-react';
 import SectionHeading from '../components/SectionHeading';
 import { staggerContainer, fadeInUp } from '../constants/animations';
+import { useTerminal } from '../hooks/useTerminal';
 
 const RIGHT_NOW = [
   {
@@ -31,6 +32,8 @@ const RIGHT_NOW = [
 ];
 
 export default function AboutSection() {
+  const { isTerminalOpen } = useTerminal();
+
   return (
     <section id="about" className="py-16 sm:py-20 md:py-24">
       <div className="section-container">
@@ -45,9 +48,11 @@ export default function AboutSection() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
-          className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-12 mb-16 sm:mb-20"
+          className={`grid gap-6 lg:gap-12 mb-16 sm:mb-20 ${
+            isTerminalOpen ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-5'
+          }`}
         >
-          <motion.div variants={fadeInUp} className="lg:col-span-3 space-y-4 sm:space-y-5">
+          <motion.div variants={fadeInUp} className={`${isTerminalOpen ? 'col-span-1' : 'lg:col-span-3'} space-y-4 sm:space-y-5`}>
             <p className="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
               I'm a final-year B.E. student in Artificial Intelligence & Data Science
               at MET Institute of Engineering, Nashik. I build software that works under
@@ -68,7 +73,7 @@ export default function AboutSection() {
             </p>
           </motion.div>
 
-          <motion.div variants={fadeInUp} className="lg:col-span-2">
+          <motion.div variants={fadeInUp} className={isTerminalOpen ? 'col-span-1' : 'lg:col-span-2'}>
             <div className="card-base">
               <h3 className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-3 sm:mb-4">
                 Quick Facts
@@ -104,12 +109,16 @@ export default function AboutSection() {
         >
           <motion.h2
             variants={fadeInUp}
-            className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-6 sm:mb-8"
+            className={`font-bold text-gray-900 dark:text-white mb-6 sm:mb-8 ${
+              isTerminalOpen ? 'text-lg sm:text-xl md:text-2xl' : 'text-xl sm:text-2xl md:text-3xl'
+            }`}
           >
             Right Now
           </motion.h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+          <div className={`grid gap-3 sm:gap-4 ${
+            isTerminalOpen ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2'
+          }`}>
             {RIGHT_NOW.map((item) => {
               const Icon = item.icon;
               return (

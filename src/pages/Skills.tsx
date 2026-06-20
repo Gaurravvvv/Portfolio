@@ -4,6 +4,7 @@ import SectionHeading from '../components/SectionHeading';
 import SkillBadge from '../components/SkillBadge';
 import { staggerContainer, fadeInUp, fastStaggerContainer } from '../constants/animations';
 import { SKILL_CATEGORIES } from '../constants/data';
+import { useTerminal } from '../hooks/useTerminal';
 
 const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
   Code2,
@@ -24,6 +25,8 @@ const ICON_COLORS: Record<string, string> = {
 };
 
 export default function SkillsSection() {
+  const { isTerminalOpen } = useTerminal();
+
   return (
     <section id="skills" className="py-16 sm:py-20 md:py-24">
       <div className="section-container">
@@ -37,7 +40,11 @@ export default function SkillsSection() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
+          className={`grid gap-4 sm:gap-6 ${
+            isTerminalOpen
+              ? 'grid-cols-1 xl:grid-cols-2'
+              : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
+          }`}
         >
           {SKILL_CATEGORIES.map((category) => {
             const Icon = ICON_MAP[category.icon];

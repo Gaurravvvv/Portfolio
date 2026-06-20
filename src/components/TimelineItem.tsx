@@ -3,6 +3,8 @@ import { Briefcase, Users, GraduationCap, Trophy } from 'lucide-react';
 import { fadeInLeft } from '../constants/animations';
 import type { ExperienceItem } from '../constants/data';
 
+import { useTerminal } from '../hooks/useTerminal';
+
 const TYPE_CONFIG = {
   work: { icon: Briefcase, color: 'bg-accent border-accent', label: 'Work' },
   community: { icon: Users, color: 'bg-accent border-accent', label: 'Community' },
@@ -16,12 +18,16 @@ interface TimelineItemProps {
 }
 
 export default function TimelineItem({ item, index }: TimelineItemProps) {
+  const { isTerminalOpen } = useTerminal();
   const config = TYPE_CONFIG[item.type];
   const Icon = config.icon;
 
   return (
     <motion.div
       variants={fadeInLeft}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-20px' }}
       custom={index}
       className="relative flex gap-4 sm:gap-6 group z-10"
     >
@@ -37,7 +43,9 @@ export default function TimelineItem({ item, index }: TimelineItemProps) {
 
       {/* Content card */}
       <div className="card-base flex-1 mb-6 sm:mb-8 group-last:mb-0">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-2 sm:mb-3">
+        <div className={`flex flex-col gap-1 mb-2 sm:mb-3 ${
+          isTerminalOpen ? 'sm:flex-col sm:items-start' : 'sm:flex-row sm:items-center sm:justify-between'
+        }`}>
           <div className="min-w-0">
             <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white leading-snug">
               {item.title}
@@ -49,7 +57,9 @@ export default function TimelineItem({ item, index }: TimelineItemProps) {
             )}
           </div>
           {item.period && (
-            <span className="text-[10px] sm:text-xs font-semibold text-accent whitespace-nowrap bg-accent-muted px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-md self-start sm:self-auto font-mono">
+            <span className={`text-[10px] sm:text-xs font-semibold text-accent whitespace-nowrap bg-accent-muted px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-md font-mono ${
+              isTerminalOpen ? 'self-start' : 'self-start sm:self-auto'
+            }`}>
               {item.period}
             </span>
           )}

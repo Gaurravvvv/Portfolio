@@ -2,7 +2,6 @@ import { useRef } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import SectionHeading from '../components/SectionHeading';
 import TimelineItem from '../components/TimelineItem';
-import { staggerContainer } from '../constants/animations';
 import { EXPERIENCES } from '../constants/data';
 
 export default function ExperienceSection() {
@@ -14,8 +13,8 @@ export default function ExperienceSection() {
   });
 
   const scaleY = useSpring(scrollYProgress, {
-    stiffness: 80,
-    damping: 25,
+    stiffness: 180,
+    damping: 30,
     restDelta: 0.001,
   });
 
@@ -37,17 +36,11 @@ export default function ExperienceSection() {
             style={{ scaleY }}
           />
 
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-60px' }}
-            className="relative space-y-2"
-          >
+          <div className="relative space-y-2">
             {EXPERIENCES.map((item, i) => (
               <TimelineItem key={item.title} item={item} index={i} />
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

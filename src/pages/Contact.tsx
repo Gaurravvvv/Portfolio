@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '../components/icons';
 import SectionHeading from '../components/SectionHeading';
+import { useTerminal } from '../hooks/useTerminal';
 import {
   staggerContainer,
   fadeInLeft,
@@ -69,6 +70,7 @@ const CONTACT_DETAILS: ContactDetail[] = [
 type FormStatus = 'idle' | 'sending' | 'success' | 'error';
 
 export default function ContactSection() {
+  const { isTerminalOpen } = useTerminal();
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState<FormStatus>('idle');
@@ -134,7 +136,9 @@ export default function ContactSection() {
           subtitle="Open to Software Engineering and DevOps roles. Let's connect."
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
+        <div className={`grid gap-6 sm:gap-8 lg:gap-12 ${
+          isTerminalOpen ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-2'
+        }`}>
           {/* Contact form */}
           <motion.div
             variants={fadeInLeft}
@@ -335,7 +339,7 @@ export default function ContactSection() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
-                className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 bg-[#0d0d10] border border-accent/20 text-accent
+                className="fixed bottom-18 right-4 sm:bottom-22 sm:right-6 bg-[#0d0d10] border border-accent/20 text-accent
                            px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-medium shadow-lg z-50
                            flex items-center gap-2"
               >
