@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, FileText } from 'lucide-react';
+import { Menu, X, FileText, Unlock } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import { SITE } from '../constants/data';
 import type { SectionId } from '../hooks/useActiveSection';
@@ -27,7 +27,7 @@ interface NavbarProps {
 }
 
 export default function Navbar({ theme, onToggleTheme, activeSection }: NavbarProps) {
-  const { isTerminalOpen } = useTerminal();
+  const { isTerminalOpen, isSuperUser } = useTerminal();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
@@ -113,6 +113,16 @@ export default function Navbar({ theme, onToggleTheme, activeSection }: NavbarPr
 
           {/* Right side actions */}
           <div className="flex items-center gap-2">
+            {isSuperUser && (
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-[10px] sm:text-xs font-bold font-mono text-emerald-500 bg-emerald-500/10 border border-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.1)] select-none mr-1"
+              >
+                <Unlock className="w-3.5 h-3.5 animate-pulse text-emerald-400" />
+                <span>ROOT</span>
+              </motion.div>
+            )}
             <ThemeToggle theme={theme} onToggle={onToggleTheme} />
 
             <a
@@ -182,6 +192,12 @@ export default function Navbar({ theme, onToggleTheme, activeSection }: NavbarPr
                        border-b border-border`}
           >
             <div className="section-container py-4 flex flex-col gap-1 font-mono">
+              {isSuperUser && (
+                <div className="mx-1 mt-1 mb-2 flex items-center justify-center gap-2 py-2 px-3 border border-emerald-500/20 bg-emerald-500/10 rounded-md text-emerald-400 font-bold text-xs select-none">
+                  <Unlock className="w-4 h-4 animate-pulse" />
+                  ROOT SESSION ACTIVE
+                </div>
+              )}
               {NAV_LINKS.map((link) => {
                 const isActive = activeSection === link.sectionId;
                 return (

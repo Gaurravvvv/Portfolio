@@ -3,6 +3,7 @@ import { Rocket, BookOpen, Compass, Users } from 'lucide-react';
 import SectionHeading from '../components/SectionHeading';
 import { staggerContainer, fadeInUp } from '../constants/animations';
 import { useTerminal } from '../hooks/useTerminal';
+import SecureDocumentVault from '../components/SecureDocumentVault';
 
 const RIGHT_NOW = [
   {
@@ -32,7 +33,7 @@ const RIGHT_NOW = [
 ];
 
 export default function AboutSection() {
-  const { isTerminalOpen } = useTerminal();
+  const { isTerminalOpen, isSuperUser } = useTerminal();
 
   return (
     <section id="about" className="py-16 sm:py-20 md:py-24">
@@ -73,7 +74,7 @@ export default function AboutSection() {
             </p>
           </motion.div>
 
-          <motion.div variants={fadeInUp} className={isTerminalOpen ? 'col-span-1' : 'lg:col-span-2'}>
+          <motion.div variants={fadeInUp} className={`${isTerminalOpen ? 'col-span-1' : 'lg:col-span-2'} space-y-4`}>
             <div className="card-base">
               <h3 className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-3 sm:mb-4">
                 Quick Facts
@@ -99,6 +100,17 @@ export default function AboutSection() {
             </div>
           </motion.div>
         </motion.div>
+
+        {isSuperUser && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="mt-8"
+          >
+            <SecureDocumentVault />
+          </motion.div>
+        )}
 
         {/* Right Now section */}
         <motion.div

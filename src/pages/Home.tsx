@@ -6,6 +6,7 @@ import AnimatedTyping from '../components/AnimatedTyping';
 import { SITE } from '../constants/data';
 import { useTerminal } from '../hooks/useTerminal';
 import { staggerContainer, fadeInUp, fadeIn } from '../constants/animations';
+import SecureDocumentVault from '../components/SecureDocumentVault';
 
 function BootSequence({ onComplete }: { onComplete: () => void }) {
   const [lines, setLines] = useState<string[]>([]);
@@ -80,7 +81,7 @@ function BootSequence({ onComplete }: { onComplete: () => void }) {
 }
 
 export default function HomeSection() {
-  const { isTerminalOpen } = useTerminal();
+  const { isTerminalOpen, isSuperUser } = useTerminal();
   const [isBooting, setIsBooting] = useState(() => {
     if (typeof window === 'undefined') return false;
     return !sessionStorage.getItem('portfolio-booted');
@@ -193,6 +194,17 @@ export default function HomeSection() {
                 contact_me
               </button>
             </motion.div>
+
+            {isSuperUser && (
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="mt-8 w-full max-w-4xl"
+              >
+                <SecureDocumentVault />
+              </motion.div>
+            )}
 
             {/* Social links */}
             <motion.div

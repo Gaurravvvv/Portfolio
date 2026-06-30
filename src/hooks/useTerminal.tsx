@@ -4,12 +4,30 @@ interface TerminalContextType {
   isTerminalOpen: boolean;
   setIsTerminalOpen: (open: boolean) => void;
   toggleTerminal: () => void;
+  isSuperUser: boolean;
+  setSuperUser: (isSuper: boolean) => void;
 }
 
 const TerminalContext = createContext<TerminalContextType | undefined>(undefined);
 
 export function TerminalProvider({ children }: { children: ReactNode }) {
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
+  const [isSuperUser, setIsSuperUser] = useState(() => {
+    try {
+      return localStorage.getItem('isSuperUser') === 'true';
+    } catch {
+      return false;
+    }
+  });
+
+  const setSuperUser = (isSuper: boolean) => {
+    setIsSuperUser(isSuper);
+    try {
+      localStorage.setItem('isSuperUser', String(isSuper));
+    } catch {
+      // Ignore storage errors
+    }
+  };
 
   const toggleTerminal = () => setIsTerminalOpen(prev => !prev);
 
@@ -39,7 +57,7 @@ export function TerminalProvider({ children }: { children: ReactNode }) {
   }, [isTerminalOpen]);
 
   return (
-    <TerminalContext.Provider value={{ isTerminalOpen, setIsTerminalOpen, toggleTerminal }}>
+    <TerminalContext.Provider value={{ isTerminalOpen, setIsTerminalOpen, toggleTerminal, isSuperUser, setSuperUser }}>
       {children}
     </TerminalContext.Provider>
   );
