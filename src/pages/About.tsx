@@ -3,7 +3,6 @@ import { Rocket, BookOpen, Compass, Users } from 'lucide-react';
 import SectionHeading from '../components/SectionHeading';
 import { staggerContainer, fadeInUp } from '../constants/animations';
 import { useTerminal } from '../hooks/useTerminal';
-import SecureDocumentVault from '../components/SecureDocumentVault';
 
 const RIGHT_NOW = [
   {
@@ -33,7 +32,7 @@ const RIGHT_NOW = [
 ];
 
 export default function AboutSection() {
-  const { isTerminalOpen, isSuperUser } = useTerminal();
+  const { isTerminalOpen } = useTerminal();
 
   return (
     <section id="about" className="py-16 sm:py-20 md:py-24">
@@ -100,17 +99,6 @@ export default function AboutSection() {
             </div>
           </motion.div>
         </motion.div>
-
-        {isSuperUser && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="mt-8"
-          >
-            <SecureDocumentVault />
-          </motion.div>
-        )}
 
         {/* Right Now section */}
         <motion.div
