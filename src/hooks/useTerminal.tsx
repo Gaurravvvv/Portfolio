@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, useRef, type ReactNode } from 'react';
 
 interface TerminalContextType {
   isTerminalOpen: boolean;
@@ -6,26 +6,37 @@ interface TerminalContextType {
   toggleTerminal: () => void;
   isSuperUser: boolean;
   setSuperUser: (isSuper: boolean) => void;
+  timeLeft: number; // Seconds remaining in the root session
 }
 
 const TerminalContext = createContext<TerminalContextType | undefined>(undefined);
 
+const SESSION_TIMEOUT = 5 * 60 * 1000; // 5 minutes in ms
+
 export function TerminalProvider({ children }: { children: ReactNode }) {
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
-  const [isSuperUser, setIsSuperUser] = useState(() => {
+  const [isSuperUser, setIsSuperUser] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(0);
+  const expiresAtRef = useRef<number>(0);
+
+  // Clear legacy localStorage items on mount
+  useEffect(() => {
     try {
-      return localStorage.getItem('isSuperUser') === 'true';
+      localStorage.removeItem('isSuperUser');
+      localStorage.removeItem('superuserExpiresAt');
     } catch {
-      return false;
+      // ignore storage errors
     }
-  });
+  }, []);
 
   const setSuperUser = (isSuper: boolean) => {
     setIsSuperUser(isSuper);
-    try {
-      localStorage.setItem('isSuperUser', String(isSuper));
-    } catch {
-      // Ignore storage errors
+    if (isSuper) {
+      expiresAtRef.current = Date.now() + SESSION_TIMEOUT;
+      setTimeLeft(Math.ceil(SESSION_TIMEOUT / 1000));
+    } else {
+      expiresAtRef.current = 0;
+      setTimeLeft(0);
     }
   };
 
@@ -56,8 +67,51 @@ export function TerminalProvider({ children }: { children: ReactNode }) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isTerminalOpen]);
 
+  // Session timeout countdown check
+  useEffect(() => {
+    if (!isSuperUser) return;
+
+    const interval = setInterval(() => {
+      const now = Date.now();
+      const expiresAt = expiresAtRef.current;
+      if (now >= expiresAt) {
+        setSuperUser(false);
+      } else {
+        setTimeLeft(Math.max(0, Math.ceil((expiresAt - now) / 1000)));
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isSuperUser]);
+
+  // Session timeout reset on activity
+  useEffect(() => {
+    if (!isSuperUser) return;
+
+    const handleActivity = () => {
+      expiresAtRef.current = Date.now() + SESSION_TIMEOUT;
+      setTimeLeft(Math.ceil(SESSION_TIMEOUT / 1000));
+    };
+
+    let lastUpdate = Date.now();
+    const throttledActivity = () => {
+      const now = Date.now();
+      if (now - lastUpdate > 1000) {
+        lastUpdate = now;
+        handleActivity();
+      }
+    };
+
+    const events = ['mousemove', 'keydown', 'click', 'scroll'];
+    events.forEach(event => window.addEventListener(event, throttledActivity));
+
+    return () => {
+      events.forEach(event => window.removeEventListener(event, throttledActivity));
+    };
+  }, [isSuperUser]);
+
   return (
-    <TerminalContext.Provider value={{ isTerminalOpen, setIsTerminalOpen, toggleTerminal, isSuperUser, setSuperUser }}>
+    <TerminalContext.Provider value={{ isTerminalOpen, setIsTerminalOpen, toggleTerminal, isSuperUser, setSuperUser, timeLeft }}>
       {children}
     </TerminalContext.Provider>
   );

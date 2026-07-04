@@ -69,6 +69,8 @@ export default function TerminalConsole({ theme, onToggleTheme }: TerminalConsol
 
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const wasManualLogoutRef = useRef(false);
+  const prevIsSuperUserRef = useRef(isSuperUser);
 
   // Auto scroll to bottom
   useEffect(() => {
@@ -81,6 +83,21 @@ export default function TerminalConsole({ theme, onToggleTheme }: TerminalConsol
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
+
+  // Handle inactivity auto-logout or external session expiry
+  useEffect(() => {
+    if (prevIsSuperUserRef.current && !isSuperUser) {
+      if (wasManualLogoutRef.current) {
+        wasManualLogoutRef.current = false;
+      } else {
+        setHistory(prev => [
+          ...prev,
+          { text: 'Session expired due to inactivity. Credentials secured.', type: 'error' }
+        ]);
+      }
+    }
+    prevIsSuperUserRef.current = isSuperUser;
+  }, [isSuperUser]);
 
   // Also focus on click anywhere inside the console
   const handleConsoleClick = () => {
@@ -208,6 +225,7 @@ export default function TerminalConsole({ theme, onToggleTheme }: TerminalConsol
       case 'lock':
       case 'logout':
         if (isSuperUser) {
+          wasManualLogoutRef.current = true;
           setSuperUser(false);
           newHistory.push({ text: 'Superuser session closed. Credentials secured.', type: 'success' });
         } else {
@@ -370,6 +388,7 @@ export default function TerminalConsole({ theme, onToggleTheme }: TerminalConsol
       case 'exit':
       case 'close':
         if (isSuperUser) {
+          wasManualLogoutRef.current = true;
           setSuperUser(false);
           newHistory.push({ text: 'Superuser session closed. Returning to guest shell...', type: 'info' });
         } else {
