@@ -18,7 +18,7 @@ interface DocumentItem {
   filename: string;
   path: string;
   size: string;
-  category: 'Academics' | 'Certificates' | 'Identity' | 'Receipts';
+  category: 'Academics' | 'Certificates' | 'Identity' | 'Receipts' | 'Resumes';
 }
 
 const DOCUMENTS: DocumentItem[] = [
@@ -48,12 +48,16 @@ const DOCUMENTS: DocumentItem[] = [
   { id: 'branch_change', name: 'Ack & Branch Change Letter', filename: 'Ack+Branch_change.pdf', path: '/Gaurav/Ack+Branch_change.pdf', size: '226 KB', category: 'Receipts' },
   { id: 'fee_receipt_24_25', name: 'Fee Receipt 2024-25', filename: 'Fee_receipt24-25.pdf', path: '/Gaurav/Fee_receipt24-25.pdf', size: '107 KB', category: 'Receipts' },
   { id: 'fee_receipt_25_26', name: 'Fee Receipt 2025-26', filename: 'Fee_Receipt25-26.pdf', path: '/Gaurav/Fee_Receipt25-26.pdf', size: '83 KB', category: 'Receipts' },
+  // Resumes
+  { id: 'resume_cloud', name: 'Resume Cloud', filename: 'Resume Cloud.pdf', path: '/Gaurav Resumes/Resume Cloud.pdf', size: '76 KB', category: 'Resumes' },
+  { id: 'resume_main', name: 'Resume Main', filename: 'Resume Main.pdf', path: '/Gaurav Resumes/Resume Main.pdf', size: '77 KB', category: 'Resumes' },
+  { id: 'resume_p', name: 'Resume P', filename: 'Resume P.pdf', path: '/Gaurav Resumes/Resume P.pdf', size: '77 KB', category: 'Resumes' },
 ];
 
 export default function SecureDocumentVault() {
   const { isTerminalOpen } = useTerminal();
   const [searchTerm, setSearchTerm] = useState('');
-  const [activeTab, setActiveTab] = useState<'All' | 'Academics' | 'Certificates' | 'Identity' | 'Receipts'>('All');
+  const [activeTab, setActiveTab] = useState<'All' | 'Academics' | 'Certificates' | 'Identity' | 'Receipts' | 'Resumes'>('All');
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
   const [downloadProgress, setDownloadProgress] = useState(0);
@@ -148,7 +152,7 @@ export default function SecureDocumentVault() {
             <Unlock className="w-4 h-4 text-emerald-600 dark:text-emerald-400 animate-pulse" />
             <span>ROOT_SECURE_DOCUMENT_VAULT.sh</span>
           </div>
-          <p className="text-xs text-gray-650 dark:text-gray-400">19 Encrypted administrative documents active. Decryption keys online.</p>
+          <p className="text-xs text-gray-650 dark:text-gray-400">22 Encrypted administrative documents active. Decryption keys online.</p>
         </div>
         
         {/* Status indicator */}
@@ -186,7 +190,7 @@ export default function SecureDocumentVault() {
       <div className="flex flex-col gap-4 mb-6">
         {/* Category Tabs */}
         <div className="flex flex-wrap gap-1.5 border-b border-border/60 dark:border-border/40 pb-2 overflow-x-auto">
-          {(['All', 'Academics', 'Certificates', 'Identity', 'Receipts'] as const).map(tab => (
+          {(['All', 'Academics', 'Certificates', 'Identity', 'Receipts', 'Resumes'] as const).map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
