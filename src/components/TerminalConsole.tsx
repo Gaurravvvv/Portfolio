@@ -58,7 +58,7 @@ const findTerminalDoc = (query: string) => {
 };
 
 export default function TerminalConsole({ theme, onToggleTheme }: TerminalConsoleProps) {
-  const { setIsTerminalOpen, isSuperUser, setSuperUser } = useTerminal();
+  const { isTerminalOpen, setIsTerminalOpen, isSuperUser, setSuperUser } = useTerminal();
   const [inputVal, setInputVal] = useState('');
   const [isPromptingPassword, setIsPromptingPassword] = useState(false);
   const [history, setHistory] = useState<LogEntry[]>([
@@ -79,10 +79,18 @@ export default function TerminalConsole({ theme, onToggleTheme }: TerminalConsol
     }
   }, [history]);
 
-  // Focus input on mount
+  // Focus input only when terminal is open and clear stray backticks
   useEffect(() => {
-    inputRef.current?.focus();
-  }, []);
+    if (isTerminalOpen) {
+      setInputVal(prev => (prev === '`' || prev === '~' ? '' : prev));
+      const timer = setTimeout(() => {
+        inputRef.current?.focus();
+      }, 50);
+      return () => clearTimeout(timer);
+    } else {
+      inputRef.current?.blur();
+    }
+  }, [isTerminalOpen]);
 
   // Handle inactivity auto-logout or external session expiry
   useEffect(() => {
@@ -409,6 +417,16 @@ export default function TerminalConsole({ theme, onToggleTheme }: TerminalConsol
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === '`' || e.key === '~' || e.code === 'Backquote') {
+      e.preventDefault();
+      setIsTerminalOpen(false);
+      return;
+    }
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      setIsTerminalOpen(false);
+      return;
+    }
     if (e.key === 'Enter') {
       handleCommand(inputVal);
     }
@@ -473,6 +491,9 @@ export default function TerminalConsole({ theme, onToggleTheme }: TerminalConsol
             value={inputVal}
             onChange={e => setInputVal(e.target.value)}
             onKeyDown={handleKeyDown}
+            disabled={!isTerminalOpen}
+            tabIndex={isTerminalOpen ? 0 : -1}
+            data-terminal-input="true"
             className="flex-1 bg-transparent border-none outline-none focus:ring-0 focus:outline-none p-0 text-white font-mono placeholder-zinc-800 focus:placeholder-transparent"
             placeholder={
               isPromptingPassword 
@@ -481,7 +502,6 @@ export default function TerminalConsole({ theme, onToggleTheme }: TerminalConsol
                   ? 'docs...' 
                   : 'cd about...'
             }
-            autoFocus
           />
         </div>
       </div>

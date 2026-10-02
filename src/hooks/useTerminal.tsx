@@ -51,8 +51,12 @@ export function TerminalProvider({ children }: { children: ReactNode }) {
         activeEl.getAttribute('contenteditable') === 'true'
       );
 
-      if (e.key === '`') {
-        if (isInput) return; // Let user type backtick in input fields
+      const isTerminalInput = activeEl?.hasAttribute('data-terminal-input');
+
+      if (e.key === '`' || e.key === '~' || e.code === 'Backquote') {
+        // If typing inside an external input field (e.g. contact form message), don't hijack `
+        if (isInput && !isTerminalInput) return;
+
         e.preventDefault();
         setIsTerminalOpen(prev => !prev);
       }

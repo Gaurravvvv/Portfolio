@@ -58,7 +58,10 @@ export default function Layout({ theme, onToggleTheme, activeSection, children }
         initial={{ width: 0 }}
         animate={{ width: isTerminalOpen ? '50%' : '0%' }}
         transition={{ type: 'spring', stiffness: 200, damping: 25 }}
-        className="hidden md:flex fixed top-0 left-0 bottom-0 border-r border-border/80 overflow-hidden shrink-0 z-[40]"
+        className={`hidden md:flex fixed top-0 left-0 bottom-0 border-r border-border/80 overflow-hidden shrink-0 z-[40] ${
+          !isTerminalOpen ? 'pointer-events-none' : ''
+        }`}
+        aria-hidden={!isTerminalOpen}
       >
         <div className="w-screen max-w-[50vw] h-full flex flex-col bg-[#0a0a0c]">
           <TerminalConsole theme={theme} onToggleTheme={onToggleTheme} />
