@@ -14,7 +14,11 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
   return (
     <motion.article
+      layout
       variants={fadeInUp}
+      initial="hidden"
+      animate="visible"
+      exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.2 } }}
       className="card-base h-full flex flex-col overflow-hidden !p-0"
     >
       {/* Project image */}

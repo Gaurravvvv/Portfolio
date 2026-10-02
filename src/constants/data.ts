@@ -39,32 +39,32 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
   {
     title: 'Languages',
     icon: 'Code2',
-    skills: ['C++', 'Python', 'JavaScript', 'TypeScript'],
-  },
-  {
-    title: 'Frontend',
-    icon: 'Layout',
-    skills: ['React.js', 'Vite', 'Zustand', 'Tailwind CSS', 'Jinja2'],
+    skills: ['Python'],
   },
   {
     title: 'Backend',
     icon: 'Server',
-    skills: ['Node.js', 'Express.js', 'Flask', 'Socket.IO', 'REST APIs', 'LangChain'],
+    skills: ['FastAPI'],
   },
   {
     title: 'DevOps & Cloud',
     icon: 'Cloud',
-    skills: ['Docker', 'Kubernetes', 'Jenkins CI/CD', 'AWS', 'Linux'],
+    skills: ['Docker', 'Kubernetes', 'AWS', 'GitHub Actions (CI)', 'ArgoCD', 'Linux'],
+  },
+  {
+    title: 'AWS',
+    icon: 'Cloud',
+    skills: ['S3', 'EC2', 'Lambda', 'IAM', 'ECR', 'RDS'],
   },
   {
     title: 'Databases',
     icon: 'Database',
-    skills: ['MySQL', 'MongoDB', 'PostgreSQL', 'Redis (TTL, Pub/Sub)'],
+    skills: ['MySQL'],
   },
   {
     title: 'Tools',
     icon: 'Wrench',
-    skills: ['Git', 'GitHub', 'Postman', 'VS Code'],
+    skills: ['Git', 'GitHub', 'Prometheus', 'Grafana'],
   },
 ];
 
@@ -77,6 +77,7 @@ export interface Project {
   highlights: string[];
   liveUrl?: string;
   sourceUrl: string;
+  featured?: boolean;
 }
 
 export const PROJECTS: Project[] = [
@@ -101,20 +102,22 @@ export const PROJECTS: Project[] = [
     ],
     liveUrl: 'https://aettheriia.vercel.app/',
     sourceUrl: 'https://github.com/Gaurravvvv/Draw',
+    featured: true,
   },
   {
     title: 'CodeShare',
     tagline: 'Real-Time Collaborative IDE & Secure File Workspace',
     image: '/projects/codeshare.png',
     stack: [
-      'React',
-      'Node.js',
+      'FastAPI',
       'Socket.IO',
+      'Node.js',
       'Redis',
       'AWS S3 (Filebase)',
-      'Groq AI',
-      'LibreOffice',
-      'Vite',
+      'Docker',
+      'Kubernetes',
+      'ArgoCD',
+      'GitHub Actions',
     ],
     highlights: [
       'VS Code-inspired multi-file collaborative IDE with 1000ms debounce latency compensation for instant-feeling keystrokes.',
@@ -123,6 +126,7 @@ export const PROJECTS: Project[] = [
     ],
     liveUrl: 'https://codesharre.vercel.app',
     sourceUrl: 'https://github.com/Gaurravvvv/CodeShare',
+    featured: true,
   },
   {
     title: 'Doctorra',
@@ -145,6 +149,28 @@ export const PROJECTS: Project[] = [
       'Internship capstone at AI Leela / OM Intelligence — recognized by CEO & CTO for product-first mindset.',
     ],
     sourceUrl: 'https://github.com/Gaurravvvv/Doctorra',
+    featured: true,
+  },
+  {
+    title: 'Retail-Eye',
+    tagline: 'AI-Powered Shelf Auditing & Real-Time Inventory Management',
+    image: '/projects/retail-eye.png',
+    stack: [
+      'Django',
+      'Python',
+      'PostgreSQL (PGVector)',
+      'Docker',
+      'YOLOv8',
+      'ResNet50 (PyTorch)',
+      'Bootstrap 5',
+    ],
+    highlights: [
+      'Class-agnostic object detection pipeline with YOLOv8 Nano for high-fidelity multi-product bounding box localization.',
+      'Deep learning feature extraction with PyTorch ResNet50 generating 2048-dimensional spatial vector embeddings for texture/logo matching.',
+      'Native vector similarity search using PostgreSQL PGVector cosine distance with <0.5 match threshold, eliminating memory-heavy Python looping.',
+    ],
+    sourceUrl: 'https://github.com/Gaurravvvv/Retail-Eye',
+    featured: false,
   },
 ];
 
