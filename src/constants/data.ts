@@ -82,6 +82,29 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
+    title: 'DaeMon',
+    tagline: 'Distributed Compute Grid & Task Orchestration Engine',
+    image: '/projects/daemon.png',
+    stack: [
+      'FastAPI',
+      'Python',
+      'RabbitMQ',
+      'Redis',
+      'MinIO (S3)',
+      'MongoDB',
+      'Docker',
+      'Next.js',
+      'WebSockets',
+    ],
+    highlights: [
+      'Active-Push task partitioning engine built on FastAPI that dynamically chunks polymorphic computational workloads (AI image processing, math) into micro-tasks routed to dedicated per-worker RabbitMQ queues.',
+      'Zero-broker-data architecture utilizing MinIO S3 object storage for direct payload references and Redis for worker state registries, enforcing a 30s heartbeat timeout with automatic task re-assignment.',
+      '1-click headless Docker worker nodes with zero-setup auto-discovery and hardware profiling, paired with a Next.js real-time telemetry dashboard streaming cluster health and task completion via WebSockets.',
+    ],
+    sourceUrl: 'https://github.com/Gaurravvvv/Daemon',
+    featured: true,
+  },
+  {
     title: 'Drawwww',
     tagline: 'Real-Time Collaborative Whiteboard & AI Party Game Platform',
     image: '/projects/drawwww.png',
@@ -149,7 +172,7 @@ export const PROJECTS: Project[] = [
       'Internship capstone at AI Leela / OM Intelligence — recognized by CEO & CTO for product-first mindset.',
     ],
     sourceUrl: 'https://github.com/Gaurravvvv/Doctorra',
-    featured: true,
+    featured: false,
   },
   {
     title: 'Retail-Eye',

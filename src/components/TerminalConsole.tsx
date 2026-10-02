@@ -325,9 +325,11 @@ export default function TerminalConsole({ theme, onToggleTheme }: TerminalConsol
 
       case 'projects':
         newHistory.push(
-          { text: '1. Drawwww   - AI Draw Game & Collaborative Canvas API', type: 'info' },
-          { text: '2. CodeShare - Multi-file Collaborative IDE with S3 Uploads', type: 'info' },
-          { text: '3. Doctorra  - Clinic Queue & Intake triage check-in system', type: 'info' }
+          { text: '1. DaeMon    - Distributed Compute Grid & Task Orchestration Engine', type: 'info' },
+          { text: '2. Drawwww   - AI Draw Game & Collaborative Canvas API', type: 'info' },
+          { text: '3. CodeShare - Multi-file Collaborative IDE with S3 Uploads', type: 'info' },
+          { text: '4. Doctorra  - Clinic Queue & Intake triage check-in system', type: 'info' },
+          { text: '5. Retail-Eye - AI-Powered Shelf Auditing & Vector Search', type: 'info' }
         );
         break;
 
