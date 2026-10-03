@@ -5,7 +5,7 @@ export const SITE = {
   title: 'Gaurav Vibhandik — Software & DevOps Engineer Portfolio',
   description:
     'Final-year AI & Data Science student building high-performance, real-time web applications with sub-16ms rendering and 20+ concurrent user support.',
-  email: 'gaurrravvjob@gmail.com',
+  email: 'gauravvibhandik07@gmail.com',
   phone: '+91 9309580062',
   location: 'Nashik, Maharashtra, India',
   github: 'https://github.com/gaurravvvv',
